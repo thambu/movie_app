@@ -3,6 +3,7 @@ package com.dws.api;
 import com.dws.model.Movie;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,7 +27,7 @@ public class MovieControllerTest extends AbstractTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(201, status);
+        assertEquals(HttpStatus.CREATED, status);
     }
 
     @Test
@@ -39,7 +40,7 @@ public class MovieControllerTest extends AbstractTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(400, status);
+        assertEquals(HttpStatus.BAD_REQUEST, status);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class MovieControllerTest extends AbstractTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(400, status);
+        assertEquals(HttpStatus.BAD_REQUEST, status);
     }
 
 
@@ -63,7 +64,7 @@ public class MovieControllerTest extends AbstractTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri + "/" + id)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
+        assertEquals(HttpStatus.OK, status);
     }
 
     @Test
@@ -73,7 +74,7 @@ public class MovieControllerTest extends AbstractTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri + "/" + id)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(404, status);
+        assertEquals(HttpStatus.NOT_FOUND, status);
     }
 
     @Test
@@ -85,6 +86,6 @@ public class MovieControllerTest extends AbstractTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
+        assertEquals(HttpStatus.OK, status);
     }
 }

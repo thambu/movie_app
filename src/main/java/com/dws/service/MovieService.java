@@ -12,6 +12,8 @@ public interface MovieService {
 
     Optional<Movie> findMovieById(long id);
 
+    Movie findMovieByName(String name);
+
     MovieSummary getMovieSummaryByGenreAndYear(String genre, int year);
 
 }

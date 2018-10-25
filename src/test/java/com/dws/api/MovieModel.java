@@ -10,15 +10,7 @@ import java.util.List;
 public class MovieModel {
 
     public Movie createMovie() {
-        Movie movie = new Movie();
-        movie.setId(1L);
-        movie.setName("Avengers");
-        movie.setGenre("Action");
-        movie.setImage("Avengers.jpg");
-        movie.setRating("9/10");
-        movie.setYear(2017);
-        movie.setSummary("Action movie");
-        return movie;
+        return new Movie("Avengers", "Avengers.jpg", "9/10", "Action", 2017, "Action movie");
     }
 
     public List<Movie> getMoviesAsList() {

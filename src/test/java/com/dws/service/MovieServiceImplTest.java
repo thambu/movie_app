@@ -48,11 +48,25 @@ public class MovieServiceImplTest {
         Optional<Movie> movieReturned = movieService.findMovieById(1L);
         Assert.assertNotNull(movieReturned);
         Movie movieObj = movieReturned.get();
-        Assert.assertEquals(1, movieObj.getId());
+        Assert.assertEquals(Long.valueOf(1), movieObj.getId());
         Assert.assertEquals("Action", movieObj.getGenre());
         Assert.assertEquals("Avengers", movieObj.getName());
         Assert.assertEquals("Avengers.jpg", movieObj.getImage());
-        Assert.assertEquals(2017, movieObj.getYear());
+        Assert.assertEquals(Integer.valueOf(2017), movieObj.getYear());
+
+    }
+
+    @Test
+    public void findByName() {
+        Movie movie = movieModel.createMovie();
+        when(movieRepositoryMock.findByName("Avengers")).thenReturn(movie);
+        Movie movieReturned = movieService.findMovieByName("Avengers");
+        Assert.assertNotNull(movieReturned);
+        Assert.assertEquals(Long.valueOf(1), movieReturned.getId());
+        Assert.assertEquals("Action", movieReturned.getGenre());
+        Assert.assertEquals("Avengers", movieReturned.getName());
+        Assert.assertEquals("Avengers.jpg", movieReturned.getImage());
+        Assert.assertEquals(Integer.valueOf(2017), movieReturned.getYear());
 
     }
 

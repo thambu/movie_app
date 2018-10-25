@@ -1,23 +1,17 @@
 package com.dws.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Objects;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "movie")
-public class Movie implements Serializable {
+public class Movie {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Name cannot be Blank")
     private String name;
@@ -28,11 +22,11 @@ public class Movie implements Serializable {
     @NotBlank(message = "Genre cannot be Blank")
     private String genre;
     @NotNull(message = "Year cannot be Empty")
-    private int year;
+    private Integer year;
     @NotBlank(message = "Summary cannot be Blank")
     private String summary;
 
-    public Movie() {
+    protected Movie() {
     }
 
     public Movie(String name, String image, String rating, String genre, int year, String summary) {
@@ -44,13 +38,6 @@ public class Movie implements Serializable {
         this.summary = summary;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -84,14 +71,6 @@ public class Movie implements Serializable {
         this.genre = genre;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public String getSummary() {
         return summary;
     }
@@ -100,21 +79,39 @@ public class Movie implements Serializable {
         this.summary = summary;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id &&
-                Objects.equals(name, movie.name) &&
+        return Objects.equals(name, movie.name) &&
+                Objects.equals(image, movie.image) &&
+                Objects.equals(rating, movie.rating) &&
                 Objects.equals(genre, movie.genre) &&
-                Objects.equals(year, movie.year);
+                Objects.equals(year, movie.year) &&
+                Objects.equals(summary, movie.summary);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, genre, year);
+        return Objects.hash(name, image, rating, genre, year, summary);
     }
 
     @Override
@@ -125,7 +122,7 @@ public class Movie implements Serializable {
                 ", image='" + image + '\'' +
                 ", rating='" + rating + '\'' +
                 ", genre='" + genre + '\'' +
-                ", year='" + year + '\'' +
+                ", year=" + year +
                 ", summary='" + summary + '\'' +
                 '}';
     }

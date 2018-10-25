@@ -27,6 +27,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie findMovieByName(String name) {
+        return movieRepository.findByName(name);
+    }
+
+    @Override
     public MovieSummary getMovieSummaryByGenreAndYear(String genre, int year) {
         List<Movie> movieList = movieRepository.findByGenreAndYear(genre, year);
         MovieSummary movieSummary = new MovieSummary();

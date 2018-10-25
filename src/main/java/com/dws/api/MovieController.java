@@ -27,7 +27,8 @@ public class MovieController {
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
     public ResponseEntity<Movie> createMovie(@Valid @RequestBody Movie movie) {
         movieService.createMovie(movie);
-        return new ResponseEntity<>(movie, HttpStatus.CREATED);
+        Movie createdMovie = movieService.findMovieByName(movie.getName());
+        return new ResponseEntity<>(createdMovie, HttpStatus.CREATED);
     }
 
     /**
