@@ -25,7 +25,7 @@ public class MovieController {
      * Get All Movies.
      */
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
-    public ResponseEntity<Movie> createMovie(@Valid @RequestBody Movie movie) {
+    public ResponseEntity<Movie> createMovie(@Valid @RequestBody final Movie movie) {
         movieService.createMovie(movie);
         Movie createdMovie = movieService.findMovieByName(movie.getName());
         return new ResponseEntity<>(createdMovie, HttpStatus.CREATED);
@@ -35,17 +35,16 @@ public class MovieController {
      * Get Movie by Id.
      */
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
-    public Movie getMovieById(@Valid @PathVariable(value = "id") long id) {
-        return movieService.findMovieById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
+    public Movie getMovieById(@Valid @PathVariable(value = "id") Long id) {
+        return movieService.findMovieById(id);
     }
 
     /**
      * Get Movie summary by Genre and Year.
      */
     @RequestMapping(value = "/movies/{genre}/{year}", method = RequestMethod.GET)
-    public MovieSummary getMovieSummaryByGenreAndYear(@Valid @PathVariable(value = "genre") String genre,
-                                                      @Valid @PathVariable(value = "year") int year) {
+    public MovieSummary getMovieSummaryByGenreAndYear(@Valid @PathVariable(value = "genre") final String genre,
+                                                      @Valid @PathVariable(value = "year") final Integer year) {
         return movieService.getMovieSummaryByGenreAndYear(genre, year);
     }
 

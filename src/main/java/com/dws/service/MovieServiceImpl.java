@@ -1,5 +1,6 @@
 package com.dws.service;
 
+import com.dws.exception.ResourceNotFoundException;
 import com.dws.model.Movie;
 import com.dws.model.MovieSummary;
 import com.dws.repository.MovieRepository;
@@ -22,8 +23,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Optional<Movie> findMovieById(long id) {
-        return movieRepository.findById(id);
+    public Movie findMovieById(Long id) {
+        Optional<Movie> movie = movieRepository.findById(id);
+        if (!movie.isPresent()) {
+            throw new ResourceNotFoundException("Movie", "id", id);
+        } else {
+            return movie.get();
+        }
     }
 
     @Override
@@ -32,7 +38,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieSummary getMovieSummaryByGenreAndYear(String genre, int year) {
+    public MovieSummary getMovieSummaryByGenreAndYear(String genre, Integer year) {
         List<Movie> movieList = movieRepository.findByGenreAndYear(genre, year);
         MovieSummary movieSummary = new MovieSummary();
         movieSummary.setGenre(genre);

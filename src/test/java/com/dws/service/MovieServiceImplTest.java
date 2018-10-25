@@ -1,6 +1,7 @@
 package com.dws.service;
 
 import com.dws.api.MovieModel;
+import com.dws.exception.ResourceNotFoundException;
 import com.dws.model.Movie;
 import com.dws.model.MovieSummary;
 import com.dws.repository.MovieRepository;
@@ -45,15 +46,17 @@ public class MovieServiceImplTest {
     public void findById() {
         Optional<Movie> movie = Optional.of(movieModel.createMovie());
         when(movieRepositoryMock.findById(1L)).thenReturn(movie);
-        Optional<Movie> movieReturned = movieService.findMovieById(1L);
+        Movie movieReturned = movieService.findMovieById(Long.valueOf(1L));
         Assert.assertNotNull(movieReturned);
-        Movie movieObj = movieReturned.get();
-        Assert.assertEquals(Long.valueOf(1), movieObj.getId());
-        Assert.assertEquals("Action", movieObj.getGenre());
-        Assert.assertEquals("Avengers", movieObj.getName());
-        Assert.assertEquals("Avengers.jpg", movieObj.getImage());
-        Assert.assertEquals(Integer.valueOf(2017), movieObj.getYear());
+        Assert.assertEquals("Action", movieReturned.getGenre());
+        Assert.assertEquals("Avengers", movieReturned.getName());
+        Assert.assertEquals("Avengers.jpg", movieReturned.getImage());
+        Assert.assertEquals(Integer.valueOf(2017), movieReturned.getYear());
+    }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void findById_No_Record_Error() {
+        movieService.findMovieById(Long.valueOf(1L));
     }
 
     @Test
@@ -62,7 +65,6 @@ public class MovieServiceImplTest {
         when(movieRepositoryMock.findByName("Avengers")).thenReturn(movie);
         Movie movieReturned = movieService.findMovieByName("Avengers");
         Assert.assertNotNull(movieReturned);
-        Assert.assertEquals(Long.valueOf(1), movieReturned.getId());
         Assert.assertEquals("Action", movieReturned.getGenre());
         Assert.assertEquals("Avengers", movieReturned.getName());
         Assert.assertEquals("Avengers.jpg", movieReturned.getImage());

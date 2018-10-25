@@ -10,10 +10,10 @@ public interface MovieService {
 
     Movie createMovie(Movie movie);
 
-    Optional<Movie> findMovieById(long id);
+    Movie findMovieById(Long id);
 
     Movie findMovieByName(String name);
 
-    MovieSummary getMovieSummaryByGenreAndYear(String genre, int year);
+    MovieSummary getMovieSummaryByGenreAndYear(String genre, Integer year);
 
 }
