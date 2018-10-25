@@ -1,6 +1,5 @@
 package com.dws.api;
 
-import com.dws.exception.ResourceNotFoundException;
 import com.dws.model.Movie;
 import com.dws.model.MovieSummary;
 import com.dws.service.MovieService;
